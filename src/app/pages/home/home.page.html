@@ -1,0 +1,100 @@
+<ion-content>
+  <!-- GRID как в React -->
+  <div
+    class="min-h-full w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 justify-items-center"
+  >
+    <!-- PHONE FRAME -->
+    <div class="w-full bg-white shadow-2xl overflow-hidden border border-slate-100">
+      <!-- top bar -->
+      <div class="h-6 flex items-center justify-center">
+        <div class="w-24 h-1.5 rounded-full bg-slate-200 mt-2"></div>
+      </div>
+
+      <div class="px-4 pt-3 pb-6 bg-slate-50 min-h-[650px]">
+        <!-- HEADER -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="text-xl font-bold text-slate-900">Социальный</div>
+
+          <div
+            class="w-10 h-10 rounded-2xl bg-[#173A7A] text-white flex items-center justify-center font-semibold" routerLink="/profile"
+          >
+            С
+          </div>
+        </div>
+
+        <!-- SEARCH -->
+        <div
+          class="bg-white rounded-2xl border border-slate-200 px-4 py-3 flex items-center gap-3 mb-4 shadow-sm"
+        >
+          <span class="text-slate-400">⌕</span>
+          <span class="text-slate-400 text-sm">Поиск доступных товаров</span>
+        </div>
+
+        <!-- BANNER -->
+        <div class="rounded-3xl p-4 bg-gradient-to-r from-[#FFD54F] to-[#F6C436] mb-5 shadow-md">
+          <div class="text-xl font-bold text-slate-900">Скидка 30%</div>
+          <button class="mt-3 !rounded-[20px] bg-[#173A7A] text-white text-sm font-semibold !px-4 !py-2">
+            Смотреть
+          </button>
+        </div>
+
+        <!-- CATEGORIES -->
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-slate-900">Категории</h3>
+          <span class="text-sm text-[#173A7A] font-semibold cursor-pointer" routerLink="/catalog">Все</span>
+        </div>
+
+        <div class="grid grid-cols-4 gap-3 mb-5">
+          <div
+            *ngFor="let c of categories"
+            class="bg-white rounded-2xl p-3 text-center shadow-sm border border-slate-100"
+          >
+            <div
+              class="w-10 h-10 mx-auto rounded-2xl bg-[#173A7A]/10 flex items-center justify-center text-lg mb-2"
+            >
+              {{ c.icon }}
+            </div>
+
+            <div class="text-[11px] font-medium text-slate-700 leading-tight">
+              {{ c.name }}
+            </div>
+          </div>
+        </div>
+
+        <!-- TOP SALES -->
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-slate-900">Топ продаж</h3>
+          <span class="text-sm text-[#173A7A] font-semibold">Ещё</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div
+            *ngFor="let p of products.slice(0, 4)"
+            class="bg-white rounded-3xl overflow-hidden shadow-md border border-slate-100"
+          >
+            <div class="relative">
+              <img [src]="p.image" class="w-full h-24 object-cover" />
+
+              <div
+                class="absolute top-2 left-2 bg-[#FFD54F] text-slate-900 text-[10px] font-bold px-2 py-1 rounded-full"
+              >
+                {{ p.badge }}
+              </div>
+            </div>
+
+            <div class="p-3">
+              <div class="text-xs font-semibold text-slate-800 leading-tight min-h-[32px]">
+                {{ p.name }}
+              </div>
+
+              <div class="mt-2 flex items-end gap-2">
+                <span class="text-sm font-bold text-[#173A7A]">{{ p.price }}</span>
+                <span class="text-[11px] line-through text-slate-400">{{ p.oldPrice }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

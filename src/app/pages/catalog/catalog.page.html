@@ -1,0 +1,119 @@
+<ion-content class="bg-slate-100">
+  <div
+    class="min-h-full w-full mx-auto bg-white shadow-2xl border border-slate-100 overflow-hidden"
+  >
+    <!-- top bar -->
+    <div class="h-6 flex items-center justify-center">
+      <div class="w-24 h-1.5 rounded-full bg-slate-200 mt-2"></div>
+    </div>
+
+    <div class="px-4 pt-3 pb-6 bg-slate-50 min-h-[650px]">
+      <!-- HEADER -->
+      <div class="flex items-center justify-between mb-4">
+        <div class="text-xl font-bold text-slate-900">Каталог</div>
+        <div class="text-sm text-[#173A7A] font-semibold">132 товара</div>
+      </div>
+
+      <!-- SEARCH -->
+      <div
+        class="bg-white rounded-2xl border border-slate-200 px-4 py-3 flex items-center gap-3 mb-4 shadow-sm"
+      >
+        <span class="text-slate-400">⌕</span>
+        <span class="text-slate-400 text-sm">Поиск по каталогу</span>
+      </div>
+
+      <!-- FILTER -->
+      <div class="mb-4 overflow-x-auto">
+
+  <div class="flex gap-3">
+
+    <div
+      *ngFor="let cat of categories"
+      class="min-w-[70px] border border-slate-200 overflow-hidden bg-white"
+    >
+
+      <!-- CATEGORY -->
+      <button
+        (click)="toggleCategory(cat.id)"
+        class="w-full px-4 py-3 flex justify-between items-center"
+      >
+
+        <span class="font-semibold text-slate-800">
+          {{ cat.name }}
+        </span>
+
+      </button>
+
+      <!-- SUBCATEGORIES -->
+      <div
+        *ngIf="expandedCategory === cat.id"
+        class=" pb-3 flex flex-wrap gap-2"
+      >
+
+        <button
+          *ngFor="let sub of cat.children"
+          (click)="selectSubCategory(sub.id)"
+          class="px-3 py-1 text-xs rounded-2xl border transition-all"
+          [ngClass]="
+            activeSubCategory === sub.id
+              ? 'bg-[#173A7A] text-white border-[#173A7A]'
+              : 'bg-slate-50 text-slate-700 border-slate-200'
+          "
+        >
+          {{ sub.name }}
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+      <!-- PRODUCTS -->
+      <div class="space-y-3">
+        <div
+          *ngFor="let p of filteredProducts"
+          class="bg-white rounded-3xl p-3 shadow-sm border border-slate-100 flex gap-3"
+        >
+          <img [src]="p.image" class="w-20 h-20 rounded-2xl object-cover" />
+
+          <div class="flex-1">
+            <div class="flex items-start justify-between gap-2">
+              <div class="text-sm font-semibold text-slate-900 leading-tight">
+                {{ p.name }}
+              </div>
+
+              <div
+                class="bg-[#FFD54F] text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap"
+              >
+                {{ p.badge }}
+              </div>
+            </div>
+
+            <div class="text-xs text-slate-500 mt-1">Доступные товары</div>
+
+            <div class="mt-3 flex items-center justify-between">
+              <div>
+                <div class="text-base font-bold text-[#173A7A]">
+                  {{ p.price }}
+                </div>
+
+                <div class="text-[11px] text-slate-400 line-through">
+                  {{ p.oldPrice }}
+                </div>
+              </div>
+
+              <button
+                class="inline-flex !p-[5px] items-center justify-center px-5 py-2.5 !rounded-[4px] bg-[#173A7A] text-white text-sm font-semibold shadow-sm active:scale-95 transition-all duration-150 whitespace-nowrap"
+              >
+                В корзину
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

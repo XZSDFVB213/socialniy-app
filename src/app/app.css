@@ -1,0 +1,74 @@
+/* убираем весь дефолт Ionic */
+ion-tab-bar {
+  --background: transparent;
+  border: none;
+  padding: 0 10px !important;
+  display: flex;
+  justify-content: space-between;
+}
+ion-tab-button,
+ion-tab-button * {
+  text-decoration: none !important;
+}
+ion-tab-button::part(native) {
+  text-decoration: none;
+}
+/* контейнер как в макете */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: white;
+  border-top: 1px solid #e2e8f0;
+
+  padding: 8px;
+}
+
+/* кнопки */
+ion-tab-button {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+/* сама вкладка */
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+/* активная */
+ion-tab-button.tab-selected .tab {
+  background: rgba(0, 225, 255, 0.08);
+  color: #00ddfa;
+}
+
+/* иконка */
+.tab span:first-child {
+  font-size: 26px;
+  line-height: 1;
+}
+
+/* текст */
+.tab span:last-child {
+  font-size: 14px;
+  margin-top: 4px;
+  font-weight: 500;
+  text-decoration: none;
+}
+span {
+  text-decoration: none;
+  border: none;
+}
+.icons {
+  font-size: 34px;
+}

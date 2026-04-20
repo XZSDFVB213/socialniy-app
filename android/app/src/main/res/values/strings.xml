@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">social-store</string>
+    <string name="title_activity_main">social-store</string>
+    <string name="package_name">com.socialstore.app</string>
+    <string name="custom_url_scheme">com.socialstore.app</string>
+</resources>
