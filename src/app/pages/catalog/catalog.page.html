@@ -11,7 +11,9 @@
       <!-- HEADER -->
       <div class="flex items-center justify-between mb-4">
         <div class="text-xl font-bold text-slate-900">Каталог</div>
-        <div class="text-sm text-[#173A7A] font-semibold">132 товара</div>
+        <div class="text-sm text-[#173A7A] font-semibold">
+          {{ (products$ | async)?.length || 0 }} товара
+        </div>
       </div>
 
       <!-- SEARCH -->
@@ -19,65 +21,67 @@
         class="bg-white rounded-2xl border border-slate-200 px-4 py-3 flex items-center gap-3 mb-4 shadow-sm"
       >
         <span class="text-slate-400">⌕</span>
-        <span class="text-slate-400 text-sm">Поиск по каталогу</span>
+        <input
+          (input)="onSearch($event)"
+          class="text-slate-700 text-sm w-full outline-none input-search"
+          placeholder="Поиск по каталогу"
+        />
       </div>
 
-      <!-- FILTER -->
+      <!-- CATEGORIES -->
       <div class="mb-4 overflow-x-auto">
+        <div class="flex gap-3">
+          <div
+            *ngFor="let cat of categories"
+            class="min-w-[90px] border border-slate-200 overflow-hidden bg-white rounded-2xl"
+          >
+            <!-- CATEGORY -->
+            <button
+              (click)="toggleCategory(cat.id)"
+              class="w-full !px-2 !py-1 flex justify-between items-center"
+              [ngClass]="
+                activeCategory === cat.id
+                  ? 'bg-[#173A7A] text-white'
+                  : 'text-slate-800'
+              "
+            >
+              <span class="font-semibold">
+                {{ cat.name }}
+              </span>
+            </button>
 
-  <div class="flex gap-3">
-
-    <div
-      *ngFor="let cat of categories"
-      class="min-w-[70px] border border-slate-200 overflow-hidden bg-white"
-    >
-
-      <!-- CATEGORY -->
-      <button
-        (click)="toggleCategory(cat.id)"
-        class="w-full px-4 py-3 flex justify-between items-center"
-      >
-
-        <span class="font-semibold text-slate-800">
-          {{ cat.name }}
-        </span>
-
-      </button>
-
-      <!-- SUBCATEGORIES -->
-      <div
-        *ngIf="expandedCategory === cat.id"
-        class=" pb-3 flex flex-wrap gap-2"
-      >
-
-        <button
-          *ngFor="let sub of cat.children"
-          (click)="selectSubCategory(sub.id)"
-          class="px-3 py-1 text-xs rounded-2xl border transition-all"
-          [ngClass]="
-            activeSubCategory === sub.id
-              ? 'bg-[#173A7A] text-white border-[#173A7A]'
-              : 'bg-slate-50 text-slate-700 border-slate-200'
-          "
-        >
-          {{ sub.name }}
-        </button>
-
+            <!-- SUBCATEGORIES -->
+            <div
+              *ngIf="expandedCategory === cat.id"
+              class="pb-3 px-2 flex flex-wrap gap-2"
+            >
+              <button
+                *ngFor="let sub of cat.children"
+                (click)="selectSubCategory(sub.id)"
+                class="px-3 py-1 text-xs rounded-2xl border transition-all"
+                [ngClass]="
+                  activeSubCategory === sub.id
+                    ? 'bg-[#173A7A] text-white border-[#173A7A]'
+                    : 'bg-slate-50 text-slate-700 border-slate-200'
+                "
+              >
+                {{ sub.name }}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-
-    </div>
-
-  </div>
-
-</div>
 
       <!-- PRODUCTS -->
       <div class="space-y-3">
         <div
-          *ngFor="let p of filteredProducts"
+          *ngFor="let p of products$ | async"
           class="bg-white rounded-3xl p-3 shadow-sm border border-slate-100 flex gap-3"
         >
-          <img [src]="p.image" class="w-20 h-20 rounded-2xl object-cover" />
+          <img
+            [src]="p.image"
+            class="w-20 h-20 rounded-2xl object-cover"
+          />
 
           <div class="flex-1">
             <div class="flex items-start justify-between gap-2">
@@ -92,7 +96,9 @@
               </div>
             </div>
 
-            <div class="text-xs text-slate-500 mt-1">Доступные товары</div>
+            <div class="text-xs text-slate-500 mt-1">
+              {{ p.category }}
+            </div>
 
             <div class="mt-3 flex items-center justify-between">
               <div>
@@ -113,6 +119,14 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div
+        *ngIf="(products$ | async)?.length === 0"
+        class="text-center text-slate-400 mt-10 text-sm"
+      >
+        Ничего не найдено
       </div>
     </div>
   </div>
