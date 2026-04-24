@@ -1,11 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth/auth-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [IonContent, RouterLink],
+  imports: [IonContent,CommonModule],
   templateUrl: './profile.page.html',
 })
-export class ProfilePage {}
+export class ProfilePage {
+  auth = inject(AuthService);
+  private router = inject(Router);
+
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
+}

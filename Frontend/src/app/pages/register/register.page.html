@@ -1,0 +1,52 @@
+
+
+<ion-content [fullscreen]="true">
+
+  <div class="flex flex-col justify-center items-center !min-h-full !bg-white !w-full !h-full">
+
+    <!-- ICON -->
+    <div class="w-20 h-20 rounded-3xl bg-[#173A7A] text-white flex items-center justify-center text-3xl mb-6 shadow-md">
+      👤
+    </div>
+
+    <h2 class="text-xl font-bold mb-6">Создать аккаунт</h2>
+
+    <!-- FORM CARD -->
+    <div class="w-full max-w-sm bg-white p-5 rounded-2xl shadow-md space-y-4">
+
+      <input
+        type="text"
+        placeholder="Имя"
+        [(ngModel)]="name"
+        fill="outline"
+        class="inputs">
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="email"
+        class="inputs"
+        fill="outline">
+
+      <input
+      class="inputs"
+        type="password"
+        placeholder="Пароль"
+        [(ngModel)]="password"
+        fill="outline">
+
+      <button class="button" expand="block" (click)="register()">
+        Зарегистрироваться
+      </button>
+
+    </div>
+
+    <p class="text-sm text-slate-500 mt-6">
+      Уже есть аккаунт?
+      <a routerLink="/login" class="text-[#173A7A] font-semibold">
+        Войти
+      </a>
+    </p>
+
+  </div>
+
+</ion-content>

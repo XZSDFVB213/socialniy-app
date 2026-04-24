@@ -1,0 +1,34 @@
+.inputs{
+    border: 1px solid #173A7A;
+    border-radius: 10px;
+    padding: 0 10px;
+    height: 40px;
+    gap: 10px;
+    display: flex;
+    width: 90%;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0759f0;
+    margin-bottom: 15px;
+}
+.inputs::placeholder{
+    color: #173A7A;
+}
+.inputs:active{
+    border: 1px solid #173A7A;
+}
+.button{
+    background-color: #173A7A;
+    color: #fff;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    width: 60%;
+}
+h2{
+    color: #173A7A;
+    margin-bottom: 15px;
+}

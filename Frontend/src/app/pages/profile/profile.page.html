@@ -1,4 +1,4 @@
-<ion-content class="bg-slate-100">
+<ion-content class="bg-slate-100" style="background: #fff">
   <div class="min-h-full flex flex-col items-center justify-center px-6 text-center">
     <!-- ICON -->
     <div
@@ -7,21 +7,28 @@
       👤
     </div>
 
-    <!-- TITLE -->
-    <h1 class="text-xl font-bold text-slate-900 mb-2">Профиль в разработке</h1>
+    <!-- LOGGED -->
+    <ng-container *ngIf="auth.isAuthenticated(); else guest">
+      <h1 class="text-xl font-bold mb-2">Вы вошли в аккаунт</h1>
 
-    <!-- DESCRIPTION -->
-    <p class="text-slate-500 text-sm mb-6 max-w-xs">
-      В ближайшее время здесь появится личный кабинет, регистрация и история заказов
-    </p>
+      <p class="text-slate-500 mb-6">Добро пожаловать 👋</p>
 
-    <!-- BUTTON -->
-    <button
-      class="px-6 py-3 !p-[5px] !rounded-2xl bg-[#173A7A] text-white text-sm font-semibold shadow-md active:scale-95 transition"
-      routerLink="/home"
-    >
-      На главную
-    </button>
-    <a href="https://socialniy.ru/Socialniy-v0.1.apk" download class="btn"> Скачать / обновить приложение </a>
+      <button (click)="auth.logout()" class="!px-6 !py-3 bg-red-500 !text-white !rounded-xl">
+        Выйти
+      </button>
+    </ng-container>
+
+    <!-- NOT LOGGED -->
+    <ng-template #guest>
+      <h1 class="text-xl font-bold text-slate-900 mb-2">Профиль в разработке</h1>
+
+      <p class="text-slate-500 text-sm mb-6 max-w-xs">У вас нет аккаунта или вы не вошли</p>
+
+      <button (click)="goToLogin()" class="px-6 py-3 bg-[#173A7A] text-white rounded-xl mb-3">
+        Войти
+      </button>
+
+      <button (click)="goToRegister()" class="px-6 py-3 border rounded-xl">Регистрация</button>
+    </ng-template>
   </div>
 </ion-content>
