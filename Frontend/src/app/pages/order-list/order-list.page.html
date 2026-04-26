@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Мои заказы</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-slate-100">
+
+  <div class="p-4 space-y-4">
+
+    <!-- ЕСЛИ НЕТ ЗАКАЗОВ -->
+    <ng-container *ngIf="orders!.length; else empty">
+
+      <!-- КАРТОЧКА ЗАКАЗА -->
+      <div
+        *ngFor="let order of orders"
+        class="bg-white rounded-2xl shadow-sm p-4 space-y-3"
+      >
+        <!-- HEADER -->
+        <div class="flex justify-between items-center">
+          <h2 class="font-semibold text-slate-900">
+            Заказ #{{ order.id }}
+          </h2>
+
+          <span
+            class="text-xs px-3 py-1 rounded-full"
+            [ngClass]="{
+              'bg-green-100 text-green-700': order.status === 'completed',
+              'bg-yellow-100 text-yellow-700': order.status === 'pending',
+              'bg-red-100 text-red-700': order.status === 'cancelled'
+            }"
+          >
+            {{ order.status }}
+          </span>
+        </div>
+
+        <!-- ДАТА -->
+        <p class="text-sm text-slate-500">
+          {{ order.createdAt | date: 'dd.MM.yyyy HH:mm' }}
+        </p>
+
+        <!-- ТОВАРЫ -->
+        <div class="space-y-2">
+          <div
+            *ngFor="let item of order.items"
+            class="flex justify-between text-sm"
+          >
+            <span class="text-slate-700">
+              {{ item.product.title }}
+            </span>
+
+            <span class="text-slate-900 font-medium">
+              {{ item.quantity }} × {{ item.price }} ₽
+            </span>
+          </div>
+        </div>
+
+        <!-- ИТОГ -->
+        <div class="flex justify-between border-t pt-3 mt-2">
+          <span class="text-slate-500 text-sm">Итого</span>
+          <span class="font-semibold text-slate-900">
+            {{ order.total }} ₽
+          </span>
+        </div>
+      </div>
+
+    </ng-container>
+
+    <!-- ПУСТО -->
+    <ng-template #empty>
+      <div class="text-center text-slate-500 mt-20">
+        У вас пока нет заказов 🛒
+      </div>
+    </ng-template>
+
+  </div>
+
+</ion-content>

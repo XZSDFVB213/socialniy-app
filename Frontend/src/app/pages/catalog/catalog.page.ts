@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { map, Observable } from 'rxjs';
 import { ProductService } from '../../services/product-service';
 import { IonContent } from '@ionic/angular/standalone';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 
 type CategoryKey = 'all' | 'textile' | 'kitchen' | 'clothes' | 'accessories';
 
@@ -22,11 +23,14 @@ interface Category {
 export class CatalogPage implements OnInit {
   products: any[] = [];
   products$!: Observable<any[]>;
-
+  private router = inject(Router);
   expandedCategory: string | null = null;
   activeCategory: CategoryKey = 'all';
   activeSubCategory: string | null = null;
 
+  goToProduct(id: string) {
+      this.router.navigate(['/product', id]);
+  }
   // 🔥 категории под UI
   categories: Category[] = [
      {

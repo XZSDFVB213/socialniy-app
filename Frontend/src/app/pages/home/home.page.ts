@@ -1,17 +1,23 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
+import { map, Observable, take } from 'rxjs';
+import { ProductService } from '../../services/product-service';
 
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, IonicModule,RouterLink],
+  imports: [CommonModule, IonicModule, RouterLink, AsyncPipe],
   templateUrl: './home.page.html',
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  constructor(private productService: ProductService) {}
+  products$!: Observable<any[]>;
   private router = inject(Router);
-
+  ngOnInit() {
+    this.products$ = this.productService.getTop()
+  }
   goToCatalog() {
     this.router.navigate(['/catalog']);
   }
@@ -21,23 +27,7 @@ export class HomePage {
     { name: 'Полотенца', icon: '🧺' },
     { name: 'Платки', icon: '🧕' },
   ];
-
-  products = [
-    {
-      name: 'Набор полотенец для семьи',
-      price: '1 299 ₽',
-      oldPrice: '1 899 ₽',
-      badge: 'Соц. цена',
-      image:
-        'https://images.unsplash.com/photo-1616628182509-6f6db3686a0a?auto=format&fit=crop&w=600&q=80',
-    },
-    {
-      name: 'Детские хлопковые носки',
-      price: '450 ₽',
-      oldPrice: '700 ₽',
-      badge: '-35%',
-      image:
-        'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=600&q=80',
-    },
-  ];
+  goToProduct(id: string) {
+    this.router.navigate(['/product', id]);
+  }
 }

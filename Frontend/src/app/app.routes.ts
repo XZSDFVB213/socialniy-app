@@ -33,6 +33,16 @@ export const routes: Routes = [
   {
     path: 'register',
     loadComponent: () => import('./pages/register/register.page').then( m => m.RegisterPage)
+  },
+  {
+    path: 'order-list',
+    loadComponent: () => import('./pages/order-list/order-list.page').then( m => m.OrderListPage)
+  },
+  {
+    path: 'product/:id',
+    loadComponent: () => import('./pages/product/product.page').then( m => m.ProductPage)
   }
+
+  
 
 ];
