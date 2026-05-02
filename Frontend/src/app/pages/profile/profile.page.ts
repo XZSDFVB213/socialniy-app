@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../interface/user.interface';
 import { OrderListPage } from '../order-list/order-list.page';
 import { OrderService } from '../../services/order/order-service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-profile',
@@ -18,16 +19,10 @@ export class ProfilePage implements OnInit {
   private ordersService = inject(OrderService);
   private router = inject(Router);
   user$ = this.auth.user$;
-  ordersCount?: number
+  ordersCount = toSignal(this.ordersService.getCountOrders(), { initialValue: 0 });
   ngOnInit(): void {
   this.auth.user$.subscribe(user => {
     if (!user) return;
-
-    this.ordersService.getCountOrders().subscribe({
-      next: (res: any) => {
-        this.ordersCount = res;
-      },
-    });
   });
 }
   goToLogin() {

@@ -1,10 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 
 import { map, Observable } from 'rxjs';
 import { ProductService } from '../../services/product-service';
 import { IonContent } from '@ionic/angular/standalone';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Product } from '../../interface/product.interface';
 
 type CategoryKey = 'all' | 'textile' | 'kitchen' | 'clothes' | 'accessories';
 
@@ -20,20 +22,54 @@ interface Category {
   templateUrl: './catalog.page.html',
   styleUrls: ['./catalog.page.scss'],
 })
-export class CatalogPage implements OnInit {
-  products: any[] = [];
-  products$!: Observable<any[]>;
+export class CatalogPage {
   private router = inject(Router);
+  private productService = inject(ProductService);
+  products = toSignal(this.productService.getAll(), { initialValue: [] });
+
+  // 🔥 UI state
+  searchTerm = signal('');
+  activeCategory = signal<CategoryKey>('all');
+  activeSubCategory = signal<string | null>(null);
+
   expandedCategory: string | null = null;
-  activeCategory: CategoryKey = 'all';
-  activeSubCategory: string | null = null;
+
+  filteredProducts = computed(() => {
+    const products = this.products();
+    const search = this.searchTerm().toLowerCase();
+    const category = this.activeCategory();
+    const subCategory = this.activeSubCategory();
+
+    return products.filter((p: any) => {
+      const matchSearch = p.title?.toLowerCase().includes(search);
+
+      const matchCategory = category === 'all' || p.category === category;
+
+      const matchSubCategory = !subCategory || p.subCategory === subCategory;
+
+      return matchSearch && matchCategory && matchSubCategory;
+    });
+  });
+  onSearch(event: any) {
+    this.searchTerm.set(event.target.value);
+  }
+
+  toggleCategory(id: CategoryKey) {
+    this.expandedCategory = this.expandedCategory === id ? null : id;
+
+    this.activeCategory.set(id);
+    this.activeSubCategory.set(null);
+  }
+
+  selectSubCategory(id: string) {
+    this.activeSubCategory.set(id);
+  }
 
   goToProduct(id: string) {
-      this.router.navigate(['/product', id]);
+    this.router.navigate(['/product', id]);
   }
-  // 🔥 категории под UI
   categories: Category[] = [
-     {
+    {
       id: 'all',
       name: 'Все',
       children: [
@@ -52,62 +88,7 @@ export class CatalogPage implements OnInit {
         { id: 'napkins', name: 'Салфетки' },
       ],
     },
-    {
-      id: 'kitchen',
-      name: 'Кухня',
-      children: [{ id: 'apron', name: 'Фартуки' }],
-    },
-    {
-      id: 'clothes',
-      name: 'Одежда',
-      children: [{ id: 'socks', name: 'Носки' }],
-    },
+    { id: 'kitchen', name: 'Кухня', children: [{ id: 'apron', name: 'Фартуки' }] },
+    { id: 'clothes', name: 'Одежда', children: [{ id: 'socks', name: 'Носки' }] },
   ];
-  constructor(private productService: ProductService) {}
-
-  ngOnInit() {
-    this.productService.getAll().subscribe((data) => {
-      this.products = data;
-      this.updateProducts();
-    });
-  }
-  searchTerm: string = '';
-
-  onSearch(event: any) {
-    this.searchTerm = event.target.value.toLowerCase();
-    this.updateProducts();
-  }
-  // 🔁 обновление стрима
-  updateProducts() {
-    this.products$ = new Observable((observer) => {
-      observer.next(this.filteredProducts);
-      observer.complete();
-    });
-  }
-
-  // 🔥 логика фильтрации
-  get filteredProducts() {
-    return this.products.filter((p: any) => {
-      const matchCategory = this.activeCategory === 'all' || p.category === this.activeCategory;
-
-      const matchSubCategory = !this.activeSubCategory || p.subCategory === this.activeSubCategory;
-
-      return matchCategory && matchSubCategory;
-    });
-  }
-
-  // 👉 открыть категорию
-  toggleCategory(id: CategoryKey) {
-    this.expandedCategory = this.expandedCategory === id ? null : id;
-    this.activeCategory = id;
-    this.activeSubCategory = null;
-
-    this.updateProducts();
-  }
-
-  // 👉 выбрать подкатегорию
-  selectSubCategory(id: string) {
-    this.activeSubCategory = id;
-    this.updateProducts();
-  }
 }

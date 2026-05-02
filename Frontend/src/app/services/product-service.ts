@@ -1,22 +1,25 @@
-import { Injectable } from '@angular/core';
-import { products } from '../data/product.data.mock';
-import { normalizeProducts } from '../utils/product-normalizer';
-import { map, of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, map, of } from 'rxjs';
+import { Product } from '../interface/product.interface';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  private products = normalizeProducts(products);
+  private api = environment.API_URL;
+  private http = inject(HttpClient);
+  private products = new BehaviorSubject<Product[]>([]);
+  products$ = this.products.asObservable();
 
   getAll() {
-    return of(this.products);
+    return this.http.get<Product[]>(`${this.api}/products`);
   }
   getById(id: string) {
-    return of(this.products).pipe(
-      map((products) => products.find((p) => p.id === id)!));
+    return this.http.get<Product>(`${this.api}/products/${id}`);
   }
-  getTop(limit = 10) {
-  return of(this.products.slice(0, limit));
-}
+  // getTop(limit = 10) {
+  //   return of(this.products.slice(0, limit));
+  // }
 }

@@ -5,7 +5,7 @@
     <!-- IMAGE CARD -->
     <div class="bg-white rounded-2xl shadow-sm overflow-hidden mb-4">
       <img
-        [src]="product.image"
+        [src]="product().image"
         class="w-full h-72 object-cover"
       />
     </div>
@@ -14,16 +14,16 @@
     <div class="bg-white rounded-2xl p-4 shadow-sm mb-4">
 
       <h1 class="text-xl font-bold text-slate-900 mb-2">
-        {{product.title }}
+        {{product().title }}
       </h1>
 
       <p class="text-slate-500 text-sm mb-4 leading-relaxed">
-        {{ product.description || 'Описание товара отсутствует' }}
+        {{ product().description || 'Описание товара отсутствует' }}
       </p>
 
       <div class="flex items-center justify-between">
         <span class="text-2xl font-bold text-[#173A7A]">
-          {{ product.price }}
+          {{ product().price }}
         </span>
 
         <span class="text-xs bg-slate-100 px-3 py-1 rounded-full text-slate-600">
@@ -36,8 +36,8 @@
     <!-- ACTIONS -->
     <div class="flex flex-col gap-3">
 
-      <button class="!w-full !py-3 !rounded-xl bg-[#173A7A] !text-white !font-medium">
-        Добавить в корзину
+      <button class="!w-full !py-3 !rounded-xl bg-[#173A7A] !text-white !font-medium" (click)="addToFavorite()">
+        Добавить в избранное
       </button>
 
       <button class="!w-full !py-3 !rounded-xl !border !border-slate-300 !text-slate-700">

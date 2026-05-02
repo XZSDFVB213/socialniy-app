@@ -5,6 +5,8 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../interface/product.interface';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FavoriteService } from '../../services/favorite/favorite-service';
 
 @Component({
   selector: 'app-product',
@@ -16,16 +18,21 @@ import { Product } from '../../interface/product.interface';
 export class ProductPage implements OnInit {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
+  private favoriteService = inject(FavoriteService);
+  product = toSignal(this.productService.getById(this.route.snapshot.paramMap.get('id')!), { initialValue: {} as Product });
 
-  product!: Product;
+  addToFavorite() {
+  const id = this.product()?.id;
 
+  if (!id) return;
+
+  this.favoriteService.addToFavorite(id).subscribe(() => {
+    console.log('added to favorites');
+  });
+}
 ngOnInit() {
   const id = this.route.snapshot.paramMap.get('id');
 
   if (!id) return;
-
-  this.productService.getById(id).subscribe((product) => {
-    this.product = product;
-  });
 }
 }

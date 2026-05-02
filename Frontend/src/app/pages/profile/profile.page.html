@@ -11,7 +11,7 @@
       <p class="text-slate-500 mb-6">Добро пожаловать 👋
       <h2 class="text-lg font-bold mb-2">{{ (user$|async)?.name }}</h2>
       <p class="text-slate-500 mb-6">{{ (user$|async)?.email }}</p>
-        <h1 class="text-slate-500 mb-6">Количество заказов - {{ordersCount}}</h1>
+        <h1 class="text-slate-500 mb-6">Количество заказов - {{ordersCount()}}</h1>
         <app-order-list class="!w-full !min-h-full !mb-6" *ngIf="auth.isAuthenticated()"></app-order-list>
       <button (click)="this.logout()" class="!px-6 !py-3 bg-red-500 !text-white !rounded-xl">
         Выйти

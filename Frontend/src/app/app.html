@@ -1,36 +1,38 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
-<ion-tabs>
-  
+  <ion-tabs>
 
-  <ion-tab-bar slot="bottom" class="tabbar">
-    <ion-tab-button tab="home" [routerLink]="['/home']">
-      <div class="tab">
-        <span class="material-symbols-outlined icons">home</span>
-        <span>Главная</span>
-      </div>
-    </ion-tab-button>
 
-    <ion-tab-button tab="catalog" [routerLink]="['/catalog']">
-      <div class="tab">
-        <span class="material-symbols-outlined icons">list</span>
-        <span>Каталог</span>
-      </div>
-    </ion-tab-button>
+    <ion-tab-bar slot="bottom" class="tabbar">
+      <ion-tab-button tab="home" [routerLink]="['/home']">
+        <div class="tab">
+          <span class="material-symbols-outlined icons">home</span>
+          <span>Главная</span>
+        </div>
+      </ion-tab-button>
 
-    <ion-tab-button tab="cart" [routerLink]="['/cart']">
-      <div class="tab">
-        <span class="material-symbols-outlined icons">shopping_cart</span>
-        <span>Корзина</span>
-      </div>
-    </ion-tab-button>
+      <ion-tab-button tab="catalog" [routerLink]="['/catalog']">
+        <div class="tab">
+          <span class="material-symbols-outlined icons">list</span>
+          <span>Каталог</span>
+        </div>
+      </ion-tab-button>
 
-    <ion-tab-button tab="profile" [routerLink]="['/profile']">
-      <div class="tab">
-        <span class="material-symbols-outlined icons"> account_circle </span>
-        <span>Профиль</span>
-      </div>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
+      <ion-tab-button tab="favorite" [routerLink]="['/favorite']">
+        <div class="tab">
+          <span class="material-symbols-outlined">
+            favorite
+          </span>
+          <span>Избранное</span>
+        </div>
+      </ion-tab-button>
+
+      <ion-tab-button tab="profile" [routerLink]="['/profile']">
+        <div class="tab">
+          <span class="material-symbols-outlined icons"> account_circle </span>
+          <span>Профиль</span>
+        </div>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-app>

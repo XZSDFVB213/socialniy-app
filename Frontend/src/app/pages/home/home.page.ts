@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
   products$!: Observable<any[]>;
   private router = inject(Router);
   ngOnInit() {
-    this.products$ = this.productService.getTop()
+    // this.products$ = this.productService.getTop()
   }
   goToCatalog() {
     this.router.navigate(['/catalog']);
