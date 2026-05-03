@@ -17,15 +17,15 @@ export class RegisterPage implements OnInit {
   private router = inject(Router);
   ngOnInit() {}
 
-  email = '';
+  phone = '';
   password = '';
   name = '';
   onRegister() {
     this.authService
-      .register({ name: this.name, email: this.email, password: this.password })
+      .register({ name: this.name, phone: this.phone, password: this.password })
       .subscribe(() => {
         this.authService.login({
-          email: this.email,
+          phone: this.phone,
           password: this.password,
         });
 

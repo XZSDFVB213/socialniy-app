@@ -17,13 +17,13 @@ export class LoginPage implements OnInit {
   private router = inject(Router);
   ngOnInit() {}
 
-  email = '';
+  phone = '';
   password = '';
 
   login() {
     this.authService
       .login({
-        email: this.email,
+        phone: this.phone,
         password: this.password,
       })
       .subscribe((res: any) => {
