@@ -1,35 +1,55 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth/auth-service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, RouterLink],
+  imports: [IonContent, CommonModule, RouterLink, FormsModule],
 })
-export class RegisterPage implements OnInit {
+export class RegisterPage {
   private authService = inject(AuthService);
   private router = inject(Router);
-  ngOnInit() {}
 
-  phone = '';
-  password = '';
-  name = '';
+  // ===== signals =====
+  name = signal('');
+  phone = signal('');
+  password = signal('');
+
+  agree = signal(false);
+  acceptedPolicy = signal(false);
+
+  // ===== computed =====
+  canSubmit = computed(() =>
+    this.agree() && this.acceptedPolicy() && this.phone().length > 5
+  );
+
   onRegister() {
-    this.authService
-      .register({ name: this.name, phone: this.phone, password: this.password })
-      .subscribe(() => {
-        this.authService.login({
-          phone: this.phone,
-          password: this.password,
-        });
+    const normalizedPhone = this.authService.normalizePhone(this.phone());
 
-        this.router.navigate(['/profile']);
+    this.authService
+      .register({
+        name: this.name(),
+        phone: normalizedPhone,
+        password: this.password(),
+        agree: this.agree(),
+        acceptedPolicy: this.acceptedPolicy(),
+      })
+      .subscribe({
+        next: () => {
+          this.authService.login({
+            phone: normalizedPhone,
+            password: this.password(),
+          });
+
+          this.router.navigate(['/login']);
+        },
+        error: (err) => console.error(err),
       });
   }
 }

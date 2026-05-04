@@ -22,7 +22,19 @@ export class AuthService {
   register(dto: any) {
     return this.http.post(`${this.api}/auth/register`, dto);
   }
+  normalizePhone(phone: string): string {
+    let cleaned = phone.replace(/\D/g, ''); // убрать всё кроме цифр
 
+    if (cleaned.startsWith('8')) {
+      cleaned = '7' + cleaned.slice(1);
+    }
+
+    if (!cleaned.startsWith('7')) {
+      cleaned = '7' + cleaned;
+    }
+
+    return '+' + cleaned;
+  }
   saveToken(token: string) {
     localStorage.setItem('token', token);
   }
@@ -38,8 +50,8 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-  return !!localStorage.getItem('token');
-}
+    return !!localStorage.getItem('token');
+  }
   saveUser(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
     this.user.next(user);

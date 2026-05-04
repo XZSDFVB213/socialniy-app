@@ -23,7 +23,7 @@ export class LoginPage implements OnInit {
   login() {
     this.authService
       .login({
-        phone: this.phone,
+        phone: this.authService.normalizePhone(this.phone),
         password: this.password,
       })
       .subscribe((res: any) => {

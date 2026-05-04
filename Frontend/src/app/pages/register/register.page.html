@@ -1,52 +1,71 @@
-
-
 <ion-content [fullscreen]="true">
+  <div class="flex flex-col justify-center items-center min-h-full bg-white w-full h-full">
 
-  <div class="flex flex-col justify-center items-center !min-h-full !bg-white !w-full !h-full">
-
-    <!-- ICON -->
     <div class="w-20 h-20 rounded-3xl bg-[#173A7A] text-white flex items-center justify-center text-3xl mb-6 shadow-md">
       👤
     </div>
 
     <h2 class="text-xl font-bold mb-6">Создать аккаунт</h2>
 
-    <!-- FORM CARD -->
-    <div class="w-full max-w-sm bg-white p-5 rounded-2xl shadow-md space-y-4">
+    <div class="div-inputs w-full max-w-sm bg-white p-5 rounded-2xl shadow-md space-y-4">
 
       <input
         type="text"
         placeholder="Имя"
-        [(ngModel)]="name"
-        fill="outline"
-        class="inputs">
-      <input
-        type="phone"
-        placeholder="phone"
-        [(ngModel)]="phone"
         class="inputs"
-        fill="outline">
+        [value]="name()"
+        (input)="name.set($any($event.target).value)"
+      />
 
       <input
-      class="inputs"
+        type="tel"
+        placeholder="Телефон"
+        class="inputs"
+        [value]="phone()"
+        (input)="phone.set($any($event.target).value)"
+      />
+
+      <input
         type="password"
         placeholder="Пароль"
-        [(ngModel)]="password"
-        fill="outline">
+        class="inputs"
+        [value]="password()"
+        (input)="password.set($any($event.target).value)"
+      />
 
-      <button class="button" expand="block" (click)="onRegister()">
+      <label class="label">
+        <input
+          type="checkbox"
+          [checked]="agree()"
+          (change)="agree.set($any($event.target).checked)"
+        />
+        Я даю согласие на обработку данных <a class="text-[#173A7A] font-semibold" href="https://www.mfc51.ru/site/assets/files/1056/152-fz_red__ot_24_06_2025.pdf?ysclid=moro2ap91h722247349">№152-ФЗ «О персональных данных»</a>
+      </label>
+
+      <label class="label">
+        <input
+          type="checkbox"
+          [checked]="acceptedPolicy()"
+          (change)="acceptedPolicy.set($any($event.target).checked)"
+        />
+        Я принимаю
+        <a href="https://socialniy.ru/policy.pdf" class="text-[#173A7A] font-semibold">
+          Политику конфиденциальности
+        </a>
+      </label>
+
+      <button
+        class="button"
+        [disabled]="!canSubmit()"
+        (click)="onRegister()"
+      >
         Зарегистрироваться
       </button>
-
     </div>
 
     <p class="text-sm text-slate-500 mt-6">
       Уже есть аккаунт?
-      <a routerLink="/login" class="text-[#173A7A] font-semibold">
-        Войти
-      </a>
+      <a routerLink="/login" class="text-[#173A7A] font-semibold">Войти</a>
     </p>
-
   </div>
-
 </ion-content>
