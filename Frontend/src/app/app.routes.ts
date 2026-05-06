@@ -44,6 +44,10 @@ export const routes: Routes = [
   },  {
     path: 'favorite',
     loadComponent: () => import('./pages/favorite/favorite.page').then( m => m.FavoritePage)
+  },
+  {
+    path: 'banner-slider',
+    loadComponent: () => import('./pages/banner-slider/banner-slider.page').then( m => m.BannerSliderPage)
   }
 
 

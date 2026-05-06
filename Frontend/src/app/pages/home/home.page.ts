@@ -4,11 +4,12 @@ import { IonicModule } from '@ionic/angular';
 import { Router, RouterLink } from '@angular/router';
 import { map, Observable, take } from 'rxjs';
 import { ProductService } from '../../services/product-service';
+import { BannerSliderPage } from "../banner-slider/banner-slider.page";
 
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, IonicModule, RouterLink, AsyncPipe],
+  imports: [CommonModule, IonicModule, RouterLink, AsyncPipe, BannerSliderPage],
   templateUrl: './home.page.html',
 })
 export class HomePage implements OnInit {

@@ -1,0 +1,43 @@
+<!-- banner-slider.component.html -->
+<div class="mb-5">
+  <swiper-container
+    class="rounded-3xl shadow-md overflow-hidden"
+    [pagination]="{ clickable: true }"
+    autoplay="true"
+    autoplay-delay="3000"
+    [loop]="true"
+    [speed]="600"
+    [slidesPerView]="1"
+    [spaceBetween]="0">
+
+    <!-- Слайд 1 -->
+    <swiper-slide class="relative">
+      <img src="assets/banner1.jpg" 
+           class="w-full h-48 object-cover" 
+           alt="Скидка 30%">
+
+      <div class="absolute inset-0 p-4 flex flex-col justify-end">
+        <div class="text-xl font-bold text-slate-900">Скидка 30%</div>
+        <button class="mt-3 self-start !rounded-[20px] bg-[#173A7A] text-white text-sm font-semibold !px-4 !py-2">
+          Смотреть
+        </button>
+      </div>
+    </swiper-slide>
+
+    <!-- Слайд 2 -->
+    <swiper-slide class="relative">
+      <img src="assets/banner2.jpg" 
+           class="w-full h-48 object-cover" 
+           alt="Акция 2">
+
+      <div class="absolute inset-0 p-4 flex flex-col justify-end">
+        <div class="text-xl font-bold text-slate-900">Новая коллекция</div>
+        <button class="mt-3 self-start !rounded-[20px] bg-[#173A7A] text-white text-sm font-semibold !px-4 !py-2">
+          Смотреть
+        </button>
+      </div>
+    </swiper-slide>
+
+    <!-- Добавляй сколько нужно -->
+  </swiper-container>
+</div>
