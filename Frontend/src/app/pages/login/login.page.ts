@@ -1,7 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  ToastController, // ← Добавили
+} from '@ionic/angular/standalone';
+
 import { AuthService } from '../../services/auth/auth-service';
 import { Router, RouterLink } from '@angular/router';
 
@@ -15,10 +19,24 @@ import { Router, RouterLink } from '@angular/router';
 export class LoginPage implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
-  ngOnInit() {}
+  private toastCtrl = inject(ToastController);
 
   phone = '';
   password = '';
+
+  ngOnInit() {}
+
+  // ==================== Всплывающее уведомление ====================
+  private async showToast(message: string, color: 'success' | 'danger' | 'warning' = 'success') {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2500,
+      color,
+      position: 'top',
+      cssClass: 'custom-toast',
+    });
+    await toast.present();
+  }
 
   login() {
     this.authService
@@ -26,11 +44,15 @@ export class LoginPage implements OnInit {
         phone: this.authService.normalizePhone(this.phone),
         password: this.password,
       })
-      .subscribe((res: any) => {
-        this.authService.saveToken(res.token);
-        this.authService.saveUser(res.user);
-
-        this.router.navigate(['/profile']);
+      .subscribe({
+        next: async () => {
+          await this.showToast('Вы успешно вошли!', 'success');
+          this.router.navigate(['/home'], { replaceUrl: true });
+        },
+        error: async (err) => {
+          console.error(err);
+          this.showToast('Неверный логин или пароль', 'danger');
+        },
       });
   }
 }

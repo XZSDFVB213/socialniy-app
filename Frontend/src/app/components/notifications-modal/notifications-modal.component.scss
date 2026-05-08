@@ -1,0 +1,25 @@
+/* notifications-modal.component.scss */
+.notification-modal-top {
+  --border-radius: 0 0 20px 20px; /* закругление только снизу */
+  --height: 92%;
+  --width: 100%;
+
+  ion-content {
+    --background: #f8fafc;
+  }
+}
+
+/* Анимация появления сверху */
+.notification-modal-top {
+  transform: translateY(-100%) !important;
+  animation: slideDown 0.4s ease forwards !important;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

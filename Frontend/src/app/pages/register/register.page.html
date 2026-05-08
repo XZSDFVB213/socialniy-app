@@ -32,6 +32,19 @@
         [value]="password()"
         (input)="password.set($any($event.target).value)"
       />
+      <ion-select
+        interface="action-sheet"
+        placeholder="Выберите город"
+        [value]="city()"
+        (ionChange)="city.set($any($event).detail.value)"
+        class="inputs"
+      >
+        <ion-select-option value="Derbent">Дербент</ion-select-option>
+        <ion-select-option value="Makhachkala">Махачкала</ion-select-option>
+        <ion-select-option value="Kaspiysk">Каспийск</ion-select-option>
+        <ion-select-option value="Majdalis">Маджалис</ion-select-option>
+        <ion-select-option value="Izberbash">Избербаш</ion-select-option>
+      </ion-select>
 
       <label class="label">
         <input

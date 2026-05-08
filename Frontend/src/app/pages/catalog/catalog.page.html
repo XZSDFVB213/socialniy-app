@@ -39,7 +39,7 @@
             </button>
 
             <!-- SUBCATEGORIES -->
-            <div *ngIf="expandedCategory === cat.id" class="pb-3 px-2 flex flex-wrap gap-2">
+            <div *ngIf="expandedCategory() === cat.id" class="pb-3 px-2 flex flex-wrap gap-2">
               <button *ngFor="let sub of cat.children" (click)="selectSubCategory(sub.id)"
                 class="px-3 py-1 text-xs rounded-2xl border transition-all" [ngClass]="
                   activeSubCategory() === sub.id
@@ -55,7 +55,7 @@
 
       <!-- PRODUCTS -->
       <div class="space-y-3">
-        @for (p of products(); track p.id) {
+        @for (p of filteredProducts(); track p.id) {
         <div class="bg-white rounded-3xl p-3 shadow-sm border border-slate-100 flex gap-3" (click)="goToProduct(p.id)">
           <img [src]="p.image" class="w-20 h-20 rounded-2xl object-cover" />
 

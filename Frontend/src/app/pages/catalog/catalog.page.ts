@@ -1,11 +1,9 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-
-import { map, Observable } from 'rxjs';
-import { ProductService } from '../../services/product-service';
 import { IonContent } from '@ionic/angular/standalone';
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { ProductService } from '../../services/product-service';
 import { Product } from '../../interface/product.interface';
 
 type CategoryKey = 'all' | 'textile' | 'kitchen' | 'clothes' | 'accessories';
@@ -15,50 +13,67 @@ interface Category {
   name: string;
   children: { id: string; name: string }[];
 }
+
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [IonContent, AsyncPipe, CommonModule],
+  imports: [IonContent, CommonModule],
   templateUrl: './catalog.page.html',
   styleUrls: ['./catalog.page.scss'],
 })
-export class CatalogPage {
+export class CatalogPage implements OnInit {
   private router = inject(Router);
   private productService = inject(ProductService);
-  products = toSignal(this.productService.getAll(), { initialValue: [] });
-
-  // 🔥 UI state
+  private route = inject(ActivatedRoute);
+  products = toSignal(this.productService.getAll(), { initialValue: [] as Product[] });
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      const category = params['category'];
+      if (category) {
+        this.activeCategory.set(category);
+      }
+    });
+  }
+  // UI State
   searchTerm = signal('');
   activeCategory = signal<CategoryKey>('all');
   activeSubCategory = signal<string | null>(null);
+  expandedCategory = signal<CategoryKey | null>(null);
 
-  expandedCategory: string | null = null;
-
+  // ==================== ФИЛЬТРАЦИЯ ====================
   filteredProducts = computed(() => {
-    const products = this.products();
-    const search = this.searchTerm().toLowerCase();
+    const allProducts = this.products();
+    const search = this.searchTerm().toLowerCase().trim();
     const category = this.activeCategory();
     const subCategory = this.activeSubCategory();
 
-    return products.filter((p: any) => {
-      const matchSearch = p.title?.toLowerCase().includes(search);
+    return allProducts.filter((p: Product) => {
+      const matchSearch =
+        !search ||
+        p.title?.toLowerCase().includes(search) ||
+        p.category?.toLowerCase().includes(search);
 
       const matchCategory = category === 'all' || p.category === category;
-
       const matchSubCategory = !subCategory || p.subCategory === subCategory;
 
       return matchSearch && matchCategory && matchSubCategory;
     });
   });
+
+  // ==================== МЕТОДЫ ====================
   onSearch(event: any) {
     this.searchTerm.set(event.target.value);
   }
 
   toggleCategory(id: CategoryKey) {
-    this.expandedCategory = this.expandedCategory === id ? null : id;
+    if (this.expandedCategory() === id) {
+      this.expandedCategory.set(null);
+    } else {
+      this.expandedCategory.set(id);
+    }
 
     this.activeCategory.set(id);
-    this.activeSubCategory.set(null);
+    this.activeSubCategory.set(null); // сбрасываем подкатегорию
   }
 
   selectSubCategory(id: string) {
@@ -68,18 +83,10 @@ export class CatalogPage {
   goToProduct(id: string) {
     this.router.navigate(['/product', id]);
   }
+
+  // ==================== КАТЕГОРИИ ====================
   categories: Category[] = [
-    {
-      id: 'all',
-      name: 'Все',
-      children: [
-        { id: 'all', name: 'Все' },
-        { id: 'textile', name: 'Текстиль' },
-        { id: 'kitchen', name: 'Кухня' },
-        { id: 'clothes', name: 'Одежда' },
-        { id: 'accessories', name: 'Аксессуары' },
-      ],
-    },
+    { id: 'all', name: 'Все', children: [] },
     {
       id: 'textile',
       name: 'Текстиль',
@@ -88,7 +95,20 @@ export class CatalogPage {
         { id: 'napkins', name: 'Салфетки' },
       ],
     },
-    { id: 'kitchen', name: 'Кухня', children: [{ id: 'apron', name: 'Фартуки' }] },
-    { id: 'clothes', name: 'Одежда', children: [{ id: 'socks', name: 'Носки' }] },
+    {
+      id: 'kitchen',
+      name: 'Кухня',
+      children: [{ id: 'apron', name: 'Фартуки' }],
+    },
+    {
+      id: 'clothes',
+      name: 'Одежда',
+      children: [{ id: 'socks', name: 'Носки' }],
+    },
+    {
+      id: 'accessories',
+      name: 'Аксессуары',
+      children: [],
+    },
   ];
 }

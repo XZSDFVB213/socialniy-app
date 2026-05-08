@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="font-semibold">Уведомления</ion-title>
+    <ion-button slot="end" fill="clear" (click)="dismiss()" class="text-[#173A7A]">
+      Закрыть
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg-slate-50">
+  <div class="p-4">
+    <ion-button fill="clear" size="small" (click)="markAllAsRead()" class="mb-4">
+      Отметить все как прочитанные
+    </ion-button>
+
+    <div *ngFor="let n of notifications" 
+         class="bg-white rounded-3xl p-4 mb-3 shadow-sm"
+         [ngClass]="!n.read ? 'border-l-4 border-[#173A7A]' : ''">
+
+      <div class="flex justify-between">
+        <div class="font-semibold text-base">{{ n.title }}</div>
+        <div class="text-xs text-slate-400 whitespace-nowrap">{{ n.time }}</div>
+      </div>
+
+      <div class="text-sm text-slate-600 mt-2 leading-snug">
+        {{ n.message }}
+      </div>
+    </div>
+
+    @if (notifications.length === 0) {
+      <div class="text-center py-20">
+        <p class="text-5xl mb-4">🛎️</p>
+        <p class="text-slate-400">Пока нет уведомлений</p>
+      </div>
+    }
+  </div>
+</ion-content>
