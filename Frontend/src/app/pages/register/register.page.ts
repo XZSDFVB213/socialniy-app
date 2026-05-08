@@ -30,7 +30,7 @@ export class RegisterPage {
   password = signal('');
   agree = signal(false);
   acceptedPolicy = signal(false);
-  city = signal<City>(City.Derbent);
+  city = signal<City>('Derbent');
 
   canSubmit = computed(() =>
     this.agree() && this.acceptedPolicy()
@@ -50,7 +50,7 @@ export class RegisterPage {
 
   async onRegister() {
   const normalizedPhone = this.authService.normalizePhone(this.phone());
-
+  console.log(this.city())
   this.authService
     .register({
       name: this.name(),
@@ -82,6 +82,7 @@ export class RegisterPage {
 
       error: async (err) => {
         console.error(err);
+        console.log(this.city())
         let message = 'Ошибка регистрации';
 
         if (err.error?.message) message = err.error.message;

@@ -1,3 +1,4 @@
+
 export interface User  {
     id: string;
     name: string;
@@ -9,10 +10,6 @@ export interface User  {
     acceptedTerms: boolean;
     city: City;
 };
-export enum City{
-    Derbent = 'Дербент',
-    Majdalis = 'Маджалис',
-    Makhachkala = 'Махачкала',
-    Kaspiysk = 'Каспийск',
-    Izberbash = 'Избербаш'
-}
+export type City = 'Derbent' | 'Madjalis' | 'Makhachkala' | 
+                   'Kasumkent' | 'Belidzhi' | 'Dagestanskie_ogni' | 
+                   'Izberbash'
