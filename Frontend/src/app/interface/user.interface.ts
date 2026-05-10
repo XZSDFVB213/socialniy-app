@@ -10,6 +10,6 @@ export interface User  {
     acceptedTerms: boolean;
     city: City;
 };
-export type City = 'Derbent' | 'Madjalis' | 'Makhachkala' | 
-                   'Kasumkent' | 'Belidzhi' | 'Dagestanskie_ogni' | 
+export type City = 'Derbent' | 'Madjalis' | 'Kaspiysk' | 
+                   'Kasumkent' | 'Belidzhi' | 'Dagestanskie_Ogni' | 
                    'Izberbash'

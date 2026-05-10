@@ -1,8 +1,6 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
   <ion-tabs>
-
-
     <ion-tab-bar slot="bottom" class="tabbar">
       <ion-tab-button tab="home" [routerLink]="['/home']">
         <div class="tab">
@@ -19,10 +17,20 @@
       </ion-tab-button>
 
       <ion-tab-button tab="favorite" [routerLink]="['/favorite']">
-        <div class="tab">
-          <span class="material-symbols-outlined">
+        <div class="tab relative">
+          <!-- relative для позиционирования бейджа -->
+
+          <span class="material-symbols-outlined icons relative">
             favorite
+            <!-- Красный бейдж -->
+            <span
+              *ngIf="favoriteService.favoriteCount() > 0"
+              class="badge-count absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-medium min-w-[18px] h-[18px] flex items-center justify-center rounded-full shadow-sm"
+            >
+              {{ favoriteService.favoriteCount() }}
+            </span>
           </span>
+
           <span>Избранное</span>
         </div>
       </ion-tab-button>

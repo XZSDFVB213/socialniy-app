@@ -38,26 +38,23 @@ export class ProductPage implements OnInit {
   }
 
   addToFavorite() {
-    const id = this.product()?.id;
-    if (!id) {
-      this.showToast('Товар не найден', 'danger');
-      return;
-    }
+  const id = this.product()?.id;
+  if (!id) return;
 
-    this.favoriteService.addToFavorite(id).subscribe({
-      next: async (response: any) => {
-        if (response.alreadyExists) {
-          await this.showToast('❤️ Товар уже в избранном', 'warning'); // или 'success'
-        } else {
-          await this.showToast('❤️ Товар добавлен в избранное!', 'success');
-        }
-      },
-      error: async (err) => {
-        console.error(err);
-        await this.showToast('Не удалось добавить в избранное', 'danger');
-      },
-    });
-  }
+  this.favoriteService.addToFavorite(id).subscribe({
+    next: async (response: any) => {
+      if (response.alreadyExists) {
+        await this.showToast('❤️ Товар уже в избранном', 'warning');
+      } else {
+        await this.showToast('❤️ Товар добавлен в избранное!', 'success');
+      }
+    },
+    error: async (err) => {
+      console.error(err);
+      await this.showToast('Не удалось добавить', 'danger');
+    }
+  });
+}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');

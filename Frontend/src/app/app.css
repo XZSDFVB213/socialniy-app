@@ -17,6 +17,7 @@ ion-tab-button::part(native) {
 .tabbar {
   position: fixed;
   bottom: 0;
+
   left: 0;
   right: 0;
 
@@ -72,3 +73,5 @@ span {
 .icons {
   font-size: 34px;
 }
+.badge-count{
+font-family:Arial, Helvetica, sans-serif;}

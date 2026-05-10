@@ -1,14 +1,14 @@
 <ion-content [fullscreen]="true">
   <div class="flex flex-col justify-center items-center min-h-full bg-white w-full h-full">
-
-    <div class="w-20 h-20 rounded-3xl bg-[#173A7A] text-white flex items-center justify-center text-3xl mb-6 shadow-md">
+    <div
+      class="w-20 h-20 rounded-3xl bg-[#173A7A] text-white flex items-center justify-center text-3xl mb-6 shadow-md"
+    >
       👤
     </div>
 
     <h2 class="text-xl font-bold mb-6">Создать аккаунт</h2>
 
     <div class="div-inputs w-full max-w-sm bg-white p-5 rounded-2xl shadow-md space-y-4">
-
       <input
         type="text"
         placeholder="Имя"
@@ -24,7 +24,13 @@
         [value]="phone()"
         (input)="phone.set($any($event.target).value)"
       />
-
+      <input
+        type="mail"
+        placeholder="Почта"
+        class="inputs"
+        [value]="email()"
+        (input)="email.set($any($event.target).value)"
+      />
       <input
         type="password"
         placeholder="Пароль"
@@ -40,10 +46,12 @@
         class="inputs"
       >
         <ion-select-option value="Derbent">Дербент</ion-select-option>
-        <ion-select-option value="Makhachkala">Махачкала</ion-select-option>
+        <ion-select-option value="Dagestanskie_Ogni">Дагестанские огни</ion-select-option>
         <ion-select-option value="Kaspiysk">Каспийск</ion-select-option>
-        <ion-select-option value="Majdalis">Маджалис</ion-select-option>
+        <ion-select-option value="Madjalis">Маджалис</ion-select-option>
         <ion-select-option value="Izberbash">Избербаш</ion-select-option>
+        <ion-select-option value="Belidzhi">Белиджи</ion-select-option>
+        <ion-select-option value="Kasumkent">Касумкент</ion-select-option>
       </ion-select>
 
       <label class="label">
@@ -52,7 +60,12 @@
           [checked]="agree()"
           (change)="agree.set($any($event.target).checked)"
         />
-        Я даю согласие на обработку данных <a class="text-[#173A7A] font-semibold" href="https://www.mfc51.ru/site/assets/files/1056/152-fz_red__ot_24_06_2025.pdf?ysclid=moro2ap91h722247349">№152-ФЗ «О персональных данных»</a>
+        Я даю согласие на обработку данных
+        <a
+          class="text-[#173A7A] font-semibold"
+          href="https://www.mfc51.ru/site/assets/files/1056/152-fz_red__ot_24_06_2025.pdf?ysclid=moro2ap91h722247349"
+          >№152-ФЗ «О персональных данных»</a
+        >
       </label>
 
       <label class="label">
@@ -67,11 +80,7 @@
         </a>
       </label>
 
-      <button
-        class="button"
-        [disabled]="!canSubmit()"
-        (click)="onRegister()"
-      >
+      <button class="button" [disabled]="!canSubmit()" (click)="onRegister()">
         Зарегистрироваться
       </button>
     </div>

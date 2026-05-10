@@ -15,18 +15,18 @@ import { Favorite } from '../../interface/favorite.interface';
   imports: [IonContent, CommonModule, FormsModule],
 })
 export class FavoritePage implements OnInit {
-  ngOnInit() {
-    this.favoriteService.getFavorites().subscribe((res) => {
-      this.favorites.set(res as Favorite[]);
-      console.log(res);
-    });
-  }
   private favoriteService = inject(FavoriteService);
 
-  favorites = signal<Favorite[]>([]);
+  // Теперь просто читаем signal из сервиса
+  favorites = this.favoriteService.favorites;
+
+  ngOnInit() {
+    // Первый загрузка
+    this.favoriteService.getFavorites().subscribe();
+  }
+
   remove(id: string) {
-    this.favoriteService.removeFromFavorites(id).subscribe(() => {
-      this.favorites.update((list) => list.filter((f) => f.id !== id));
-    });
+    this.favoriteService.removeFromFavorites(id).subscribe();
+    // Обновление уже произойдёт автоматически через pipe(tap)
   }
 }

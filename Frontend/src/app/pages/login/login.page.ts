@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
+  ModalController,
   ToastController, // ← Добавили
 } from '@ionic/angular/standalone';
 
 import { AuthService } from '../../services/auth/auth-service';
 import { Router, RouterLink } from '@angular/router';
+import { ForgotPasswordModalComponent } from '../../components/forgot-password-modal/forgot-password-modal.component';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,7 @@ export class LoginPage implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private toastCtrl = inject(ToastController);
+  constructor(private modalCtrl: ModalController) {}
 
   phone = '';
   password = '';
@@ -54,5 +57,14 @@ export class LoginPage implements OnInit {
           this.showToast('Неверный логин или пароль', 'danger');
         },
       });
+  }
+  async forgotPassword() {
+    const modal = await this.modalCtrl.create({
+      component: ForgotPasswordModalComponent,
+      cssClass: 'forgot-password-modal', // можно стилизовать
+      backdropDismiss: true,
+    });
+
+    await modal.present();
   }
 }

@@ -19,32 +19,44 @@ export class AuthService {
 
   login(dto: any) {
     return this.http.post<any>(`${this.api}/auth/login`, dto).pipe(
-      tap(response => {
+      tap((response) => {
         if (response.token) {
           this.saveToken(response.token);
         }
         if (response.user) {
           this.saveUser(response.user);
-        } else if (response.data?.user) {           // на случай разной структуры
+        } else if (response.data?.user) {
+          // на случай разной структуры
           this.saveUser(response.data.user);
         }
-      })
+      }),
     );
   }
 
   register(dto: any) {
     return this.http.post<any>(`${this.api}/auth/register`, dto).pipe(
-      tap(response => {
+      tap((response) => {
         if (response.token) {
           this.saveToken(response.token);
         }
         if (response.user) {
           this.saveUser(response.user);
         }
-      })
+      }),
     );
   }
+  // auth.service.ts
+  requestPasswordReset(email: string) {
+    return this.http.post(`${this.api}/auth/request-reset`, { email });
+  }
 
+  resetPassword(email: string, code: string, newPassword: string) {
+    return this.http.post(`${this.api}/auth/reset-password`, {
+      email,
+      code,
+      newPassword,
+    });
+  }
   normalizePhone(phone: string): string {
     let cleaned = phone.replace(/\D/g, '');
 

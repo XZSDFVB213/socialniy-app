@@ -28,6 +28,7 @@ export class RegisterPage {
   name = signal('');
   phone = signal('');
   password = signal('');
+  email = signal('');
   agree = signal(false);
   acceptedPolicy = signal(false);
   city = signal<City>('Derbent');
@@ -42,7 +43,7 @@ export class RegisterPage {
       message,
       duration: 3000,
       color,
-      position: 'top',        // или 'bottom' / 'middle'
+      position: 'middle',        // или 'bottom' / 'middle'
       cssClass: 'custom-toast', // можно стилизовать
     });
     await toast.present();
@@ -56,6 +57,7 @@ export class RegisterPage {
       name: this.name(),
       phone: normalizedPhone,
       password: this.password(),
+      email: this.email(),
       city: this.city(),
       agree: this.agree(),
       acceptedPolicy: this.acceptedPolicy(),

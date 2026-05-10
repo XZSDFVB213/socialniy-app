@@ -7,7 +7,7 @@
       🔐
     </div>
 
-    <h2 class="text-xl font-bold mb-6 ">Вход в аккаунт</h2>
+    <h2 class="text-xl font-bold mb-6">Вход в аккаунт</h2>
 
     <!-- FORM CARD -->
     <div class="w-full max-w-sm bg-white p-5 rounded-2xl shadow-md space-y-4">
@@ -22,7 +22,14 @@
       />
 
       <button class="button" expand="block" (click)="login()">Войти</button>
-
+      <div class="">
+        <p
+          class="text-sm font-medium cursor-pointer text-[#173A7A] hover:underline"
+          (click)="forgotPassword()"
+        >
+          Забыли пароль?
+      </p>
+      </div>
       <p class="text-sm text-slate-500 mt-6">
         Нет аккаунта?
         <a routerLink="/register" class="text-[#173A7A] font-semibold"> Регистрация </a>
