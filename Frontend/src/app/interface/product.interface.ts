@@ -7,7 +7,7 @@ export interface Product {
   image:string
   description:string
   category:string
-  subCategory:string
+  subcategory:string
   stock:number
   orderItems:OrderItem[]
 }

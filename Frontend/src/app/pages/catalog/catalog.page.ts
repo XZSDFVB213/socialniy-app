@@ -6,12 +6,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ProductService } from '../../services/product-service';
 import { Product } from '../../interface/product.interface';
 
-type CategoryKey = 'all' | 'textile' | 'kitchen' | 'clothes' | 'accessories';
+type CategoryKey = 'Все' | 'Одежда' | 'Домашний текстиль' | 'Аксессуары' | 'Обувь';
 
 interface Category {
   id: CategoryKey;
   name: string;
-  children: { id: string; name: string }[];
+  children: string[];
 }
 
 @Component({
@@ -36,7 +36,7 @@ export class CatalogPage implements OnInit {
   }
   // UI State
   searchTerm = signal('');
-  activeCategory = signal<CategoryKey>('all');
+  activeCategory = signal<CategoryKey>('Все');
   activeSubCategory = signal<string | null>(null);
   expandedCategory = signal<CategoryKey | null>(null);
 
@@ -51,10 +51,12 @@ export class CatalogPage implements OnInit {
       const matchSearch =
         !search ||
         p.title?.toLowerCase().includes(search) ||
-        p.category?.toLowerCase().includes(search);
+        p.category?.toLowerCase().includes(search) ||
+        p.subcategory?.toLowerCase().includes(search);
 
-      const matchCategory = category === 'all' || p.category === category;
-      const matchSubCategory = !subCategory || p.subCategory === subCategory;
+      const matchCategory = category === 'Все' || p.category === category;
+
+      const matchSubCategory = !subCategory || p.subcategory === subCategory;
 
       return matchSearch && matchCategory && matchSubCategory;
     });
@@ -76,8 +78,8 @@ export class CatalogPage implements OnInit {
     this.activeSubCategory.set(null); // сбрасываем подкатегорию
   }
 
-  selectSubCategory(id: string) {
-    this.activeSubCategory.set(id);
+  selectSubCategory(name: string) {
+    this.activeSubCategory.set(name);
   }
 
   goToProduct(id: string) {
@@ -86,29 +88,60 @@ export class CatalogPage implements OnInit {
 
   // ==================== КАТЕГОРИИ ====================
   categories: Category[] = [
-    { id: 'all', name: 'Все', children: [] },
     {
-      id: 'textile',
-      name: 'Текстиль',
+      id: 'Все',
+      name: 'Все',
+      children: [],
+    },
+
+    {
+      id: 'Одежда',
+      name: 'Одежда',
       children: [
-        { id: 'towels', name: 'Полотенца' },
-        { id: 'napkins', name: 'Салфетки' },
+        'Бриджи',
+        'Лосины',
+        'Брюки',
+        'Шорты',
+        'Костюмы',
+        'Кофты',
+        'Толстовки',
+        'Футболки',
+        'Платья/Сарафаны',
+        'Пижамы',
+        'Туники',
+        'Носки',
+        'Колготки',
+        'Кепки',
+        'Майки',
+        'Трусы',
       ],
     },
+
     {
-      id: 'kitchen',
-      name: 'Кухня',
-      children: [{ id: 'apron', name: 'Фартуки' }],
+      id: 'Домашний текстиль',
+      name: 'Текстиль',
+      children: [
+        'Полотенца',
+        'Пледы',
+        'Одеяла',
+        'Подушки',
+        'Покрывала',
+        'Скатерти',
+        'Прихватки',
+        'Фартуки',
+      ],
     },
+
     {
-      id: 'clothes',
-      name: 'Одежда',
-      children: [{ id: 'socks', name: 'Носки' }],
-    },
-    {
-      id: 'accessories',
+      id: 'Аксессуары',
       name: 'Аксессуары',
-      children: [],
+      children: ['Сумки', 'Зонты'],
+    },
+
+    {
+      id: 'Обувь',
+      name: 'Обувь',
+      children: ['Тапочки'],
     },
   ];
 }

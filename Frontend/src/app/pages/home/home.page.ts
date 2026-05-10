@@ -25,10 +25,10 @@ export class HomePage implements OnInit {
 
   // ==================== КАТЕГОРИИ ====================
   categories = [
-    { id: 'All', name: 'Все', icon: '🌐' },
-    { id: 'lingerie', name: 'Нижнее бельё', icon: '👚' },
-    { id: 'socks', name: 'Носки', icon: '🧦' },
-    { id: 'towels', name: 'Полотенца', icon: '🧺' },
+    { id: 'Все', name: 'Все', icon: '🌐' },
+    { id: 'Одежда', name: 'Одежда', icon: '👚' },
+    { id: 'Аксессуары', name: 'Аксессуары', icon: '🧦' },
+    { id: 'Домашний текстиль', name: 'Домашний текстиль', icon: '🧺' },
     // { id: 'kerchiefs',  name: 'Платки',      icon: '🧕' },
   ];
 
@@ -39,7 +39,7 @@ export class HomePage implements OnInit {
   }
 
   // Переход в каталог с выбранной категорией
-  goToCatalog(categoryId: string = 'all') {
+  goToCatalog(categoryId: string = 'Все') {
     this.router.navigate(['/catalog'], {
       queryParams: { category: categoryId },
     });
