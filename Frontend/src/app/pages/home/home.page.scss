@@ -2,6 +2,9 @@
     display: flex;
     flex-direction: column;
 }
+.card-product-more{
+    padding: 30px 10px;
+}
 .container_products{
     display: grid;
     grid-template-columns: repeat(3,1fr);

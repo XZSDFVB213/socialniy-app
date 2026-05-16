@@ -34,7 +34,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.products$ = this.productService.getAll().pipe(
-      map((products) => products.slice(0, 10)), // Максимум 10 товаров
+      map((products) => products.slice(0, 6)), // Максимум 10 товаров
     );
   }
 

@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
       message,
       duration: 2500,
       color,
-      position: 'top',
+      position: 'middle',
       cssClass: 'custom-toast',
     });
     await toast.present();

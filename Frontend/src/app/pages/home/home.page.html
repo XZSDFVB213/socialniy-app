@@ -97,8 +97,16 @@
               </div>
               <div class="text-xs text-slate-500 mt-1">{{ p.category }}</div>
               <div class="mt-3 flex items-center justify-between">
-                <div class="text-base font-bold text-[#173A7A]">{{ p.price }}</div>
+                <div class="text-base font-bold text-[#173A7A]">{{ p.price }}₽</div>
                 <div class="text-[11px] text-slate-400 line-through">{{ p.oldPrice }}</div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="!card-product card-product-more bg-white rounded-3xl shadow-sm border border-slate-100 gap-3" (click)="goToCatalog('Все')">
+            <div class="flex-1">
+              <div class="flex items-start justify-between gap-2">
+                <div class="text-xl font-semibold text-slate-900 leading-tight">Все товары</div>
               </div>
             </div>
           </div>
@@ -120,7 +128,7 @@
             <img [src]="p.image" class="w-20 h-20 rounded-2xl object-cover" />
             <div class="flex-1">
               <div class="flex items-start justify-between gap-2">
-                <div class="text-sm font-semibold text-slate-900 leading-tight">{{ p.name }}</div>
+                <div class="text-sm font-semibold text-slate-900 leading-tight">{{ p.title }}</div>
                 <!-- <div
                   class="bg-[#FFD54F] text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap"
                 >
@@ -129,8 +137,15 @@
               </div>
               <div class="text-xs text-slate-500 mt-1">{{ p.category }}</div>
               <div class="mt-3 flex items-center justify-between">
-                <div class="text-base font-bold text-[#173A7A]">{{ p.price }}</div>
+                <div class="text-base font-bold text-[#173A7A]">{{ p.price }}₽</div>
                 <div class="text-[11px] text-slate-400 line-through">{{ p.oldPrice }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="!card-product card-product-more bg-white rounded-3xl shadow-sm border border-slate-100 gap-3" (click)="goToCatalog('Все')">
+            <div class="flex-1">
+              <div class="flex items-start justify-between gap-2">
+                <div class="text-xl font-semibold text-slate-900 leading-tight">Все товары</div>
               </div>
             </div>
           </div>
